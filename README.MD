@@ -1,31 +1,6 @@
-[Bash]FTP Backup Script
-======================
+This backups your database (MySQL/MariaDB) to an external server.
 
-A small script to upload backup tar to an external FTP server
+You need to install "sshpass" to let this work!
+Its only working with SFTP.
 
-How it works:
-* You need to change "USERNAME,PASSWORD,SERVER" with information of your server
-* You need to change "DIR" with absolute position of folder/file you want backup
-* You need to change "FILE" with results of compression
-
-If you have some problem open an issues on GitHub
-
-##FAQ;
-
-* Q: How can I make backups automatic?
-
-    A: You can use crontab (on linux) [link](http://www.cyberciti.biz/faq/how-do-i-add-jobs-to-cron-under-linux-or-unix-oses/)
-
-
-* Q: Why can't I start the script?
-
-    A: Make the file executable (chmod -x script.sh)
-
-
-* Q: Will this work on all linux distros?
-
-    A: This script was tested on Ubuntu 12/14,Debian and Centos 6 and has worked whitout any problems
-	
-* Q: Why SFTP don't work?
-
-    A: You need to install "sshpass" ( apt-get install sshpass )
+Forked from: [Pe46dro/Bash-Backup-Script](https://github.com/Pe46dro/Bash-Backup-Script)
