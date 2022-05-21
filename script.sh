@@ -4,10 +4,6 @@
 # By Tiebienotjuh (DirectNode)
 # Original script by: Pietro Marangon
 
-clean_backup() {
-  rm -f ./$FILE
-  echo 'Local Backup Removed'
-}
 # SFTP Information of the other server.
 USERNAME="" # EXAMPLE: USERNAME="root"
 PASSWORD="" # EXAMPLE: PASSWORD="secretpassword"
