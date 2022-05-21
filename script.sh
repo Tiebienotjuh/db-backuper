@@ -1,65 +1,36 @@
 #!/bin/sh
 
-# Linux FTP Backup Script
-# Version: 1.0
-# Script by: Pietro Marangon
-# Skype: pe46dro
-# Email: pietro.marangon@gmail.com
+# MySQL/MariaDB Backuper (External SFTP)
+# By Tiebienotjuh (DirectNode)
+# Original script by: Pietro Marangon
 
 clean_backup() {
   rm -f ./$FILE
   echo 'Local Backup Removed'
 }
+# SFTP Information of the other server.
+USERNAME="" # EXAMPLE: USERNAME="root"
+PASSWORD="" # EXAMPLE: PASSWORD="secretpassword"
+SERVER="" # EXAMPLE: SERVER="127.0.0.1"
+PORT="" # EXAMPLE: PORT="22"
 
-########################
-# Edit Below This Line #
-########################
+# Database information of the database and the user of the database. There is no check if its valid. If its invalid the script breaks.
+DB_USERNAME="" # EXAMPLE: DB_USERNAME="dbuser"
+DB_PASSWORD="" # EXAMPLE: DB_PASSWORD="dbsecretpassword"
+DB_NAME="" # EXAMPLE: DB_NAME="database"
 
-# FTP Login Data
-USERNAME="USERNAME HERE"
-PASSWORD="PASSWORD HERE"
-SERVER="IP HERE"
-PORT="REMOTE SERVER PORT"
-
-#Directory where thing to backup is located
+#Directory where the sql files wil temporary saved to upload to the other server.
 DIR="/root"
 
 #Remote directory where the backup will be placed
 REMOTEDIR="./"
 
-#Filename of backup file to be transfered DON'T WRITE EXTENSION (.tar/.zip/ecc...)
-FILE="BACKUP_NAME"
-
-#Transfer type
-#1=FTP
-#2=SFTP
-TYPE=1
-
-##############################
-# Don't Edit Below This Line #
-##############################
-
+# Please do not change the script if you do not know what this means. This is important for correct use of the script
 d=$(date --iso)
+FILE="$DIR/sqlbackup_"$d".tar.gz"
+mysqldump --user=$DB_USERNAME --password=$DB_PASSWORD $DB_NAME > $PATH 
 
-FILE=$FILE"_"$d".tar.gz"
-tar -czvf ./$FILE $DIR
-echo 'Tar Complete'
-
-if [ $TYPE -eq 1 ]
-then
-ftp -n -i $SERVER $PORT <<EOF
-user $USERNAME $PASSWORD
-binary
-put $FILE $REMOTEDIR/$FILE
-quit
-EOF
-elif [ $TYPE -eq 2 ]
-then
 rsync --rsh="sshpass -p $PASSWORD ssh -p $PORT -o StrictHostKeyChecking=no -l $USERNAME" $FILE $SERVER:$REMOTEDIR
-else
-echo 'Please select a valid type'
-fi
-
 echo 'Remote Backup Complete'
-clean_backup
-#END
+rm -f ./$FILE
+echo 'Local Backup Removed'
