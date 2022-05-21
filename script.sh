@@ -24,7 +24,7 @@ REMOTEDIR="./"
 # Please do not change the script if you do not know what this means. This is important for correct use of the script
 d=$(date --iso)
 FILE="$DIR/sqlbackup_"$d".tar.gz"
-mysqldump --user=$DB_USERNAME --password=$DB_PASSWORD $DB_NAME > $PATH 
+mysqldump --user=$DB_USERNAME --password=$DB_PASSWORD $DB_NAME > $FILE 
 
 rsync --rsh="sshpass -p $PASSWORD ssh -p $PORT -o StrictHostKeyChecking=no -l $USERNAME" $FILE $SERVER:$REMOTEDIR
 echo 'Remote Backup Complete'
