@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # MySQL/MariaDB Backuper (External SFTP)
-# By Tiebienotjuh (DirectNode)
+# By Tiebienotjuh
 # Original script by: Pietro Marangon
 
 # SFTP Information of the other server.
